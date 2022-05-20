@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main # Check branch after merge
+      - gha # REVERT ME
 
 concurrency:
   # Only run once for latest commit per ref and cancel other (previous) runs.
