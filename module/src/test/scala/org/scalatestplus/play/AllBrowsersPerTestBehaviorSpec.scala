@@ -17,6 +17,7 @@ package org.scalatestplus.play
 
 import org.scalatest._
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.ie.InternetExplorerDriver
 import org.openqa.selenium.safari.SafariDriver
@@ -39,7 +40,9 @@ class AllBrowsersPerTestBehaviorSpec extends AnyWordSpec {
   "The AllBrowsersPerTest trait" must {
 
     val chrome = try {
-      val d = new ChromeDriver(); d.quit(); 1
+      val d =
+        new ChromeDriver(new ChromeOptions().addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage"));
+      d.quit(); 1
     } catch { case ex: Throwable => 0 }
     val firefox = try {
       val d = new FirefoxDriver(); d.quit(); 1
