@@ -40,7 +40,7 @@ jobs:
     with:
       java: 11, 8
       scala: 2.12.15, 2.13.8
-      cmd: sbt -Dwebdriver.chrome.driver=$CHROMEWEBDRIVER ++$MATRIX_SCALA test
+      cmd: sbt -Dwebdriver.chrome.driver=$CHROMEWEBDRIVER/chromedriver ++$MATRIX_SCALA test
 
   finish:
     name: Finish
