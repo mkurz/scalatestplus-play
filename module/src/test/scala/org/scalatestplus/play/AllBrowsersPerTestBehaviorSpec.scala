@@ -47,12 +47,15 @@ class AllBrowsersPerTestBehaviorSpec extends AnyWordSpec {
       d.quit(); 1
     } catch { case ex: Throwable => 0 }
     val firefox = try {
+      WebDriverManager.firefoxdriver().setup();
       val d = new FirefoxDriver(); d.quit(); 1
     } catch { case ex: Throwable => 0 }
     val internetExplorer = try {
+      WebDriverManager.iedriver().setup();
       val d = new InternetExplorerDriver; d.quit(); 1
     } catch { case ex: Throwable => 0 }
     val safari = try {
+      WebDriverManager.safaridriver().setup();
       val d = new SafariDriver; d.quit(); 1
     } catch { case ex: Throwable => 0 }
     val htmlUnit =
