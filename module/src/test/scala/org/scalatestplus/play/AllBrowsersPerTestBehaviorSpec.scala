@@ -15,6 +15,7 @@
  */
 package org.scalatestplus.play
 
+import io.github.bonigarcia.wdm.WebDriverManager
 import org.scalatest._
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
@@ -40,6 +41,7 @@ class AllBrowsersPerTestBehaviorSpec extends AnyWordSpec {
   "The AllBrowsersPerTest trait" must {
 
     val chrome = try {
+      WebDriverManager.chromedriver().setup();
       val d =
         new ChromeDriver(new ChromeOptions().addArguments("--headless", "--no-sandbox", "--disable-dev-shm-usage"));
       d.quit(); 1

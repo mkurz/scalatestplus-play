@@ -108,6 +108,7 @@ lazy val `scalatestplus-play` = project
     libraryDependencies ++= Seq(
       ws,
       akkaHttpServer             % Test,
+      "io.github.bonigarcia"     % "webdrivermanager"   % "5.1.1" % Test,
       "com.typesafe.play"        %% "play-test"         % PlayVersion.current,
       "org.scalatest"            %% "scalatest"         % ScalatestVersion,
       "org.scalatestplus"        %% "mockito-3-4"       % ScalatestMockitoVersion,
