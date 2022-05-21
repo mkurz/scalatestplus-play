@@ -15,6 +15,7 @@
  */
 package org.scalatestplus.play
 
+import io.github.bonigarcia.wdm.WebDriverManager
 import org.scalatest._
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
@@ -30,6 +31,13 @@ class AllBrowsersPerSuiteBehaviorSpec extends AnyWordSpec {
 
   class TestSpec extends UnitSpec with GuiceOneServerPerTest with AllBrowsersPerSuite {
     def sharedTests(browser: BrowserInfo) = {
+      browser.name match {
+        case "[Chrome]"           => WebDriverManager.chromedriver().setup();
+        case "[Firefox]"          => WebDriverManager.firefoxdriver().setup();
+        case "[Safari]"           => WebDriverManager.safaridriver().setup();
+        case "[InternetExplorer]" => WebDriverManager.iedriver().setup();
+        case _                    =>
+      }
       "test 1 " + browser.name in {}
       "test 2 " + browser.name taggedAs (ChosenTest) in {}
     }

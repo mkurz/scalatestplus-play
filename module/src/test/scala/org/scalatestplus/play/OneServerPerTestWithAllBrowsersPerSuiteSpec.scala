@@ -15,6 +15,7 @@
  */
 package org.scalatestplus.play
 
+import io.github.bonigarcia.wdm.WebDriverManager
 import org.scalatest._
 import play.api.Application
 import org.openqa.selenium.WebDriver
@@ -35,7 +36,13 @@ class OneServerPerTestWithAllBrowsersPerSuiteSpec extends UnitSpec with GuiceOne
   var theWebDriver: WebDriver = _
 
   def sharedTests(browser: BrowserInfo) = {
-
+    browser.name match {
+      case "[Chrome]"           => WebDriverManager.chromedriver().setup();
+      case "[Firefox]"          => WebDriverManager.firefoxdriver().setup();
+      case "[Safari]"           => WebDriverManager.safaridriver().setup();
+      case "[InternetExplorer]" => WebDriverManager.iedriver().setup();
+      case _                    =>
+    }
     "The AllBrowsersPerSuite trait" must {
       "provide a web driver " + browser.name in {
         go to ("http://localhost:" + port + "/testing")
