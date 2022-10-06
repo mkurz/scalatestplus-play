@@ -445,7 +445,13 @@ trait MixedFixtures extends TestSuiteMixin with fixture.UnitFixture { this: Fixt
           }
         case _ =>
           def callSuper = super.apply() // this is needed for Scala 2.10 to work
-          try Helpers.running(TestServer(port, app))(callSuper)
+          try {
+            val testServer = TestServer(port, app)
+            Helpers.running(testServer) {
+              port = testServer.runningHttpPort.getOrElse(port)
+              callSuper
+            }
+          }
           finally webDriver.quit()
       }
     }
