@@ -429,7 +429,11 @@ trait MixedFixtures extends TestSuiteMixin with fixture.UnitFixture { this: Fixt
      * Implicit `PortNumber` instance that wraps `port`. The value returned from `portNumber.value`
      * will be same as the value of `port`.
      */
-    implicit lazy val portNumber: PortNumber = PortNumber(port)
+    implicit lazy val portNumber: PortNumber = PortNumber(runningPort)
+
+    private var testServer: Option[TestServer] = None
+
+    def runningPort = testServer.flatMap(ts => ts.runningHttpPort).getOrElse(port)
 
     /**
      * Runs a `TestServer` using the passed-in `Application` and port before executing the
@@ -445,7 +449,11 @@ trait MixedFixtures extends TestSuiteMixin with fixture.UnitFixture { this: Fixt
           }
         case _ =>
           def callSuper = super.apply() // this is needed for Scala 2.10 to work
-          try Helpers.running(TestServer(port, app))(callSuper)
+          try {
+            testServer = Some(TestServer(port, app))
+            testServer.foreach(Helpers.running(_)(callSuper))
+            testServer = None
+          }
           finally webDriver.quit()
       }
     }
