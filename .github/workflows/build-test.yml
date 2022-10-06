@@ -13,29 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-code-style:
-    name: Code Style
-    uses: playframework/.github/.github/workflows/cmd.yml@v3
-    with:
-      cmd: sbt validateCode
-
-  check-binary-compatibility:
-    name: Binary Compatibility
-    uses: playframework/.github/.github/workflows/binary-check.yml@v3
-
-  check-docs:
-    name: Docs
-    uses: playframework/.github/.github/workflows/cmd.yml@v3
-    with:
-      cmd: |
-        sbt docs/validateDocs docs/scalafmtCheckAll docs/scalafmtSbtCheck docs/test
-
   tests:
     name: Tests
-    needs:
-      - "check-code-style"
-      - "check-binary-compatibility"
-      - "check-docs"
     uses: playframework/.github/.github/workflows/cmd.yml@v3
     with:
       java: 17, 11
